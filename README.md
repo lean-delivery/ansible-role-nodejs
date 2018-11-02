@@ -60,7 +60,7 @@ None.
         version: 4.16.0
 
   roles:
-    - role: nodejs
+    - role: ansible-role-nodejs
 ```
 
 ## Inventory example

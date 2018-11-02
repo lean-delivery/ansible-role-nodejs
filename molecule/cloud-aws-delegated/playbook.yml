@@ -14,4 +14,4 @@
       - name: validator
         
   roles:
-    - role: nodejs
+    - role: ansible-role-nodejs
