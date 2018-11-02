@@ -1,0 +1,33 @@
+---
+- name: Make sure apt-transport-https is installed
+  become: True
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: Add node.js apt key
+  become: True
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    state: present
+
+- name: Add node.js repositories
+  become: True
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_{{ nodejs_version }}\
+           .x {{ ansible_distribution_release }} main"
+    state: present
+    update_cache: True
+
+- name: Install node.js and npm
+  become: True
+  package:
+    name: "nodejs={{ nodejs_version }}.*"
+    state: present
+
+- name: Install build tools
+  become: True
+  package:
+    name: build-essential
+    state: present
+  when: build_tools

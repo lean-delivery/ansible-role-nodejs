@@ -1,0 +1,37 @@
+---
+- name: Define transport
+  set_fact:
+    nodejs_transport: "{{ 'http' if ansible_distribution_major_version|int < 7
+                       else 'https' }}"
+
+- name: Import nodesource RPM key
+  become: True
+  rpm_key:
+    key: "{{ nodejs_transport }}://rpm.nodesource.com/pub/el/\
+          NODESOURCE-GPG-SIGNING-KEY-EL"
+    state: present
+
+- name: Add nodesource repositories
+  become: True
+  package:
+    name: "{{ nodejs_transport }}://rpm.nodesource.com/pub_{{ nodejs_version }}\
+           .x/el/{{ ansible_distribution_major_version }}/\
+           {{ ansible_architecture }}/nodesource-release-el\
+           {{ ansible_distribution_major_version }}-1.noarch.rpm"
+    state: present
+
+- name: Install node.js and npm
+  become: True
+  yum:
+    name: "nodejs-{{ nodejs_version }}.*"
+    enablerepo: nodesource
+    state: present
+
+- name: Install build tools
+  become: True
+  package:
+    name:
+      - gcc-c++
+      - make
+    state: present
+  when: build_tools

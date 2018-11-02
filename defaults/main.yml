@@ -1,0 +1,12 @@
+---
+nodejs_version: 8
+
+build_tools: False
+
+npm_global_user: ""
+
+npm_global_group: ""
+
+npm_global_directory: /usr/local/lib/npm
+
+npm_global_packages: []
