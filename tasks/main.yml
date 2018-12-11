@@ -9,4 +9,4 @@
 
 - name: "Setup npm and install global packages"
   include_tasks: "npm.yml"
-  when: npm_global_user | trim != "" and npm_global_group | trim != ""
+  when: npm_global_user | trim and npm_global_group | trim
