@@ -8,5 +8,7 @@
     loop_var: platform
 
 - name: "Setup npm and install global packages"
-  include_tasks: "npm.yml"
-  when: npm_global_user | trim and npm_global_group | trim
+  include_tasks: npm.yml
+  when:
+    - npm_global_user | trim
+    - npm_global_group | trim
