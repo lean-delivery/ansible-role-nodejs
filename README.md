@@ -2,17 +2,20 @@ nodejs role
 =========
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-nodejs/master/LICENSE)
 [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-nodejs.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-nodejs)
+[![Build Status](https://gitlab.com/lean-delivery/ansible-role-nodejs/badges/master/build.svg)](https://gitlab.com/lean-delivery/ansible-role-nodejs/pipelines)
 [![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.nodejs-blue.svg)](https://galaxy.ansible.com/lean_delivery/nodejs)
 ![Ansible](https://img.shields.io/ansible/role/d/32264.svg)
 ![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F32264%2F&query=$.min_ansible_version)
 
-## Summary
+Summary
+-------
 
 This role:
   - installs Node.js on EL and Ubuntu.
   - make preparation and install Node.js packages globally.
 
-## Requirements
+Requirements
+------------
 
 - Version of the ansible for installation: 2.5
 - **Supported OS**
@@ -23,36 +26,51 @@ This role:
     - 16.04
     - 18.04
 
-## Role Variables
+Role Variables
+--------------
 
 - required
-  - `nodejs_version`
-  Version of node.js. Default value is `8`.
+  - `nodejs_branch` -  is used to select main nodejs branch to be installed.  
+  default value is `8`.
+  - `nodejs_version` - version of node.js.  
+  default value is `8*`
 
 - defaults
-  - `build_tools`
-  To compile and install native addons from npm you may also need build tools. Default value is `False`.
-  - `npm_global_user`
-  Global packages owner. Default value is `""` (global packages are not installed).
-  - `npm_global_group`
-  Global packages group. Default value is `""` (global packages are not installed).
-  - `npm_global_directory`
-  Global installation directory. Default value is `/usr/local/lib/npm`.
-  - `npm_global_packages`
-  A list of npm packages with a name and a version. Default value is `[]`.
+  - `nodejs_apt_key` - GPG-key for APT repositories  
+  default value is `https://deb.nodesource.com/gpgkey/nodesource.gpg.key`
+  - `nodejs_apt_url` - path to nodejs APT repository  
+  default value is `deb https://deb.nodesource.com/node_{{ nodejs_branch }}.x {{ ansible_distribution_release }} main`
+  - `nodejs_transport` - RedHat distribution transport  
+  default value is `  {{ ansible_distribution_major_version is version('7', '<') | ternary('http','https') }}`
+  - `nodejs_rpm_key` - GPG-key for RPM repositories  
+  default value is `{{ nodejs_transport }}://rpm.nodesource.com/pub/el/NODESOURCE-GPG-SIGNING-KEY-EL`
+  - `nodejs_yum_url` - path to nodejs RPM repository  
+  - `build_tools` - to compile and install native addons from npm you may also need build tools.  
+  default value is `False`.
+  - `npm_global_user` - global packages owner.  
+  default value is `""` (global packages are not installed).
+  - `npm_global_group` - global packages group.  
+  default value is `""` (global packages are not installed).
+  - `npm_global_directory` - global installation directory.  
+  default value is `/usr/local/lib/npm`.
+  - `npm_global_packages` - a list of npm packages with a name and a version.  
+  default value is `[]`.
 
-## Dependencies
+Dependencies
+------------
 
 None.
 
-## Example Playbook
+Example Playbook
+----------------
 
 ```yaml
 - name: "Install node.js on remote hosts"
   hosts: servers
 
   vars:
-    nodejs_version: 10
+    nodejs_branch: 10
+    nodejs_version: 10.15.3
     build_tools: True
     npm_global_user: user
     npm_global_group: user
@@ -66,22 +84,26 @@ None.
     - role: ansible-role-nodejs
 ```
 
-## Inventory example
+Inventory example
+-----------------
 
     [servers]
     127.0.0.1
 
-## Install nodejs role
+Install nodejs role
+-------------------
 
 ```bash
 $ ansible-playbook playbook.yml -i inventory
 ```
 
-## License
+License
+-------
 
 Apache
 
-## Author Information
+Author Information
+------------------
 
 authors:
   - Lean Delivery Team <team@lean-delivery.com>

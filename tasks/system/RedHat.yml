@@ -1,15 +1,9 @@
 ---
-- name: Define transport
-  set_fact:
-    nodejs_transport: >-
-      {{ ansible_distribution_major_version is version('7', '<')
-        | ternary('http','https') }}
-
-- block:
+- name: Nodejs installation
+  block:
     - name: Import nodesource RPM key
       rpm_key:
-        key: "{{ nodejs_transport }}://rpm.nodesource.com/pub/el/\
-              NODESOURCE-GPG-SIGNING-KEY-EL"
+        key: '{{ nodejs_rpm_key }}'
         state: present
       register: status
       retries: 10
@@ -18,10 +12,7 @@
 
     - name: Add nodesource repositories
       package:
-        name: "{{ nodejs_transport }}://rpm.nodesource.com/pub_{{ nodejs_version }}\
-              .x/el/{{ ansible_distribution_major_version }}/\
-              {{ ansible_architecture }}/nodesource-release-el\
-              {{ ansible_distribution_major_version }}-1.noarch.rpm"
+        name: '{{ nodejs_yum_url }}'
         state: present
       register: status
       retries: 10
@@ -30,7 +21,7 @@
 
     - name: Install node.js and npm
       yum:
-        name: "nodejs-{{ nodejs_version }}.*"
+        name: 'nodejs-{{ nodejs_version }}'
         enablerepo: nodesource
         state: present
       register: status

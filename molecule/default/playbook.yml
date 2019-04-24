@@ -3,8 +3,7 @@
   hosts: all
 
   vars:
-    nodejs_version: 10
-    build_tools: False
+    build_tools: True
     npm_global_user: me
     npm_global_group: me
     npm_global_directory: /home/me/.local

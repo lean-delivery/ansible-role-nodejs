@@ -3,7 +3,6 @@
   hosts: all
 
   vars:
-    nodejs_version: 10
     build_tools: False
     npm_global_user: me
     npm_global_group: me
@@ -12,6 +11,6 @@
       - name: jslint
         version: 0.12.0
       - name: validator
-        
+
   roles:
     - role: ansible-role-nodejs
