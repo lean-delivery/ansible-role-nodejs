@@ -25,17 +25,17 @@
         mode: 0644
 
     - name: "Install npm global packages"
-      become: True
+      become: true
       become_user: '{{ npm_global_user }}'
       npm:
         name: '{{ npm_global_package.name | default(npm_global_package) }}'
         version: '{{ npm_global_package.version | default("latest") }}'
         state: present
-        global: True
+        global: true
       environment:
         NPM_CONFIG_PREFIX: '{{ npm_global_directory }}'
         NODE_PATH: '{{ npm_global_directory }}/lib/node_modules'
       loop: '{{ npm_global_packages }}'
       loop_control:
         loop_var: npm_global_package
-  become: True
+  become: true

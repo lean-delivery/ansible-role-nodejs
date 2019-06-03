@@ -4,7 +4,7 @@
 
   vars:
     nodejs_branch: 10
-    build_tools: True
+    build_tools: true
     npm_global_user: me
     npm_global_group: me
     npm_global_directory: /home/me/.local

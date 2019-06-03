@@ -46,7 +46,7 @@ Role Variables
   default value is `{{ nodejs_transport }}://rpm.nodesource.com/pub/el/NODESOURCE-GPG-SIGNING-KEY-EL`
   - `nodejs_yum_url` - path to nodejs RPM repository  
   - `build_tools` - to compile and install native addons from npm you may also need build tools.  
-  default value is `False`.
+  default value is `false`.
   - `npm_global_user` - global packages owner.  
   default value is `""` (global packages are not installed).
   - `npm_global_group` - global packages group.  
@@ -71,7 +71,7 @@ Example Playbook
   vars:
     nodejs_branch: 10
     nodejs_version: 10.15.3
-    build_tools: True
+    build_tools: true
     npm_global_user: user
     npm_global_group: user
     npm_global_directory: /home/user/.local

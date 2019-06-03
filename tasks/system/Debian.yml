@@ -23,7 +23,7 @@
       apt_repository:
         repo: '{{ nodejs_apt_url }}'
         state: present
-        update_cache: True
+        update_cache: true
       register: status
       retries: 10
       delay: 2
@@ -47,4 +47,4 @@
       delay: 2
       until: status is succeeded
       when: build_tools
-  become: True
+  become: true

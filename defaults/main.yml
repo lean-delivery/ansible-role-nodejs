@@ -19,7 +19,7 @@ nodejs_yum_url: "{{ nodejs_transport }}://rpm.nodesource.com/pub_{{ nodejs_branc
                 {{ ansible_architecture }}/nodesource-release-el\
                 {{ ansible_distribution_major_version }}-1.noarch.rpm"
 
-build_tools: False
+build_tools: false
 
 npm_global_user: ""
 
