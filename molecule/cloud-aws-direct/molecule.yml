@@ -12,10 +12,11 @@ lint:
 platforms:
   - name: test-aws-centos7-nodejs
     image: ami-9887c6e7
+    platform: centos7
     instance_type: m5.large
     region: us-east-1
     vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
+    assign_public_ip: false
     spot_price: 0.04
     security_group_name:
       - default
@@ -26,10 +27,11 @@ platforms:
 
   - name: test-aws-centos6-nodejs
     image: ami-1585c46a
+    platform: centos6
     instance_type: m4.large
     region: us-east-1
     vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
+    assign_public_ip: false
     spot_price: 0.04
     security_group_name:
       - default
@@ -40,10 +42,11 @@ platforms:
 
   - name: test-aws-ubuntu16-nodejs
     image: ami-09677e0a6b14905b0
+    platform: ubuntu16
     instance_type: m5.large
     region: us-east-1
     vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
+    assign_public_ip: false
     security_group_name:
       - default
     spot_price: 0.04
@@ -54,10 +57,11 @@ platforms:
 
   - name: test-aws-ubuntu18-nodejs
     image: ami-012fd5eb46f56731f
+    platform: ubuntu18
     instance_type: m5.large
     region: us-east-1
     vpc_subnet_id: subnet-05a2ef2b767afec50
-    assign_public_ip: False
+    assign_public_ip: false
     security_group_name:
       - default
     spot_price: 0.04
@@ -68,13 +72,16 @@ platforms:
 
 provisioner:
   name: ansible
-  log: False
   inventory:
     group_vars:
       rhel_family:
         nodejs_version: 10.15.3
       debian_family:
         nodejs_version: 10*
+  log: false
+  config_options:
+    defaults:
+      callback_whitelist: profile_tasks,timer
   playbooks:
     create: ../resources/provisioning/AWS/create.yml
     prepare: ../resources/provisioning/AWS/prepare.yml
